@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -15,13 +16,9 @@
         <a href=.\table.html>Таблица</a>
     </div>
 
-
     <h1>Введите данные</h1>
 
     <form id="studentForm">
-        <label for="id">ID:</label>
-        <input type="number" id="id" name="id" required>
-        
         <label for="name">ФИО студента:</label>
         <input type="text" id="name" name="name" required>
         
@@ -33,6 +30,7 @@
         
         <label for="gender">Пол:</label>
         <select id="gender" name="gender" required>
+            <option value="" disabled selected>- Выберите пол -</option>
             <option value="Мужской">Мужской</option>
             <option value="Женский">Женский</option>
         </select>
@@ -42,6 +40,7 @@
         
         <label for="formOfEntry">Форма поступления:</label>
         <select id="formOfEntry" name="formOfEntry" required>
+            <option value="" disabled selected>- Выберите форму поступления -</option>
             <option value="Бюджет">Бюджет</option>
             <option value="Платное">Платное</option>
             <option value="Целевое">Целевое</option>
@@ -49,6 +48,7 @@
         
         <label for="direction">Название направления:</label>
         <select id="direction" name="direction" required>
+            <option value="" disabled selected>- Выберите направление -</option>
             <option value="ИБАС">ИБАС</option>
             <option value="ПМИ">ПМИ</option>
             <option value="ФИИТ">ФИИТ</option>
@@ -92,13 +92,13 @@
                 <td>Целевое</td>
                 <td>ПМИ</td>
             </tr>
-           
         </tbody>
     </table>
 
     <script>
+        let currentId = 3; 
+
         function addStudent() {
-            const id = document.getElementById('id').value;
             const name = document.getElementById('name').value;
             const recordBook = document.getElementById('recordBook').value;
             const group = document.getElementById('group').value;
@@ -107,10 +107,16 @@
             const formOfEntry = document.getElementById('formOfEntry').value;
             const direction = document.getElementById('direction').value;
 
-            const table = document.getElementById('studentTable').getElementsByTagName('tbody')[0];
+           
+            if (!name || !recordBook || !group || !gender || !age || !formOfEntry || !direction) {
+                alert("Пожалуйста, заполните все поля!");
+                return;
+            }
 
+            const table = document.getElementById('studentTable').getElementsByTagName('tbody')[0];
             const newRow = table.insertRow();
-            newRow.innerHTML = `<td>${id}</td>
+
+            newRow.innerHTML = `<td>${currentId}</td>
                                 <td>${name}</td>
                                 <td>${recordBook}</td>
                                 <td>${group}</td>
@@ -119,7 +125,8 @@
                                 <td>${formOfEntry}</td>
                                 <td>${direction}</td>`;
             
-            document.getElementById('studentForm').reset();
+            currentId++;
+            document.getElementById('studentForm').reset(); 
         }
     </script>
  <div class="header">
